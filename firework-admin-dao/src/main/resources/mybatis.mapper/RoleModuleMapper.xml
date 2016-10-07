@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--Author: Daniel Kong-->
+<mapper namespace="mybatis.mapper.RoleModuleMapper">
+    <resultMap id="BaseResultMap" type="cn.fireworkstudio.admin.bean.RoleModule">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="module_code" property="moduleCode" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, role_name, module_code, valid, create_time, create_user, update_time, update_user
+	</sql>
+
+    <!--Add new role module mapping-->
+    <insert id="addRoleModule" parameterType="cn.fireworkstudio.admin.bean.RoleModule" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO f_role_module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="moduleCode != null">
+                module_code,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            create_time,
+            create_user
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleName != null">
+                #{roleName},
+            </if>
+            <if test="moduleCode != null">
+                #{moduleCode},
+            </if>
+            <if test="valid != null">
+                #{valid},
+            </if>
+            now(),
+            #{createUser}
+        </trim>
+    </insert>
+
+    <!--Search role module mapping-->
+    <select id="searchRoleModule" parameterType="cn.fireworkstudio.admin.bean.RoleModule" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM f_role_module
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="roleName != null">
+                AND role_name = #{roleName}
+            </if>
+            <if test="moduleCode != null">
+                AND module_code = #{moduleCode}
+            </if>
+            <if test="valid != null">
+                AND valid = #{valid}
+            </if>
+        </trim>
+    </select>
+</mapper>

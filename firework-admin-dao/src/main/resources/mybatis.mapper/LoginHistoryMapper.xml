@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--Author: Daniel Kong-->
+<mapper namespace="mybatis.mapper.LoginHistoryMapper">
+    <resultMap id="BaseResultMap" type="cn.fireworkstudio.admin.bean.LoginHistory">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="platform" property="platform" jdbcType="VARCHAR"/>
+        <result column="login_time" property="loginTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, user_id, device_id, platform, login_time
+	</sql>
+
+    <!--Add login history-->
+    <insert id="addLoginHistory" parameterType="cn.fireworkstudio.admin.bean.LoginHistory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO f_login_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="platform != null">
+                platform,
+            </if>
+            login_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId},
+            </if>
+            <if test="platform != null">
+                #{platform},
+            </if>
+            now()
+        </trim>
+    </insert>
+</mapper>

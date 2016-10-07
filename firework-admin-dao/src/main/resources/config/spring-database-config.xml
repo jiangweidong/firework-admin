@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- partition 1 -->
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${partition1.driverClassName}"/>
+        <property name="url" value="${partition1.url}"/>
+        <property name="username" value="${partition1.username}"/>
+        <property name="password" value="${partition1.password}"/>
+        <property name="filters" value="config"/>
+        <property name="defaultAutoCommit" value="false" />
+        <property name="maxActive" value="${partition1.maxActive}"/>
+        <property name="maxWait" value="${partition1.maxWait}"/>
+        <property name="initialSize" value="${partition1.initialSize}"/>
+        <property name="minIdle" value="${partition1.minIdle}"/>
+        <property name="logAbandoned" value="${partition1.logAbandoned}" />
+        <property name="testWhileIdle" value="${partition1.testWhileIdle}"/>
+        <property name="testOnReturn" value="${partition1.testOnReturn}"/>
+        <property name="testOnBorrow" value="${partition1.testOnBorrow}"/>
+        <property name="validationQuery" value="${partition1.validationQuery}"/>
+        <property name="numTestsPerEvictionRun" value="${partition1.numTestsPerEvictionRun}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${partition1.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${partition1.minEvictableIdleTimeMillis}"/>
+        <property name="removeAbandoned" value="${partition1.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${partition1.removeAbandonedTimeout}" />
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${partition1.threadPoolSize}"/>
+    </bean>
+
+    <!-- partition 2 -->
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${partition2.driverClassName}"/>
+        <property name="url" value="${partition2.url}"/>
+        <property name="username" value="${partition2.username}"/>
+        <property name="password" value="${partition2.password}"/>
+        <property name="filters" value="config"/>
+        <property name="defaultAutoCommit" value="false" />
+        <property name="maxActive" value="${partition2.maxActive}"/>
+        <property name="maxWait" value="${partition2.maxWait}"/>
+        <property name="initialSize" value="${partition2.initialSize}"/>
+        <property name="minIdle" value="${partition2.minIdle}"/>
+        <property name="logAbandoned" value="${partition2.logAbandoned}" />
+        <property name="testWhileIdle" value="${partition2.testWhileIdle}"/>
+        <property name="testOnReturn" value="${partition2.testOnReturn}"/>
+        <property name="testOnBorrow" value="${partition2.testOnBorrow}"/>
+        <property name="validationQuery" value="${partition2.validationQuery}"/>
+        <property name="numTestsPerEvictionRun" value="${partition2.numTestsPerEvictionRun}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${partition2.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${partition2.minEvictableIdleTimeMillis}"/>
+        <property name="removeAbandoned" value="${partition2.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${partition2.removeAbandonedTimeout}" />
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${partition2.threadPoolSize}"/>
+    </bean>
+
+    <!-- Partition configuration -->
+    <bean id="partition1" class="com.alibaba.cobarclient.Shard">
+        <property name="id" value="partition1"/>
+        <property name="dataSource" ref="dataSource1"/>
+    </bean>
+    <bean id="partition2" class="com.alibaba.cobarclient.Shard">
+        <property name="id" value="partition2"/>
+        <property name="dataSource" ref="dataSource2"/>
+    </bean>
+
+    <!-- Shards configuration -->
+    <util:set id="shardSet" set-class="java.util.LinkedHashSet">
+        <ref bean="partition1"/>
+        <ref bean="partition2"/>
+    </util:set>
+
+    <!-- Router configuration -->
+    <bean id="router" class="com.alibaba.cobarclient.config.SimpleRouterFactoryBean">
+        <property name="configLocations">
+            <!-- rules need to add if not using partition1 -->
+            <list>
+                <value>classpath:/rules/user-rule.xml</value>
+                <value>classpath:/rules/login-history-rule.xml</value>
+                <value>classpath:/rules/module-rule.xml</value>
+                <value>classpath:/rules/role-rule.xml</value>
+                <value>classpath:/rules/role-module-rule.xml</value>
+                <value>classpath:/rules/user-role-rule.xml</value>
+            </list>
+        </property>
+        <property name="shards" ref="shardSet"/>
+    </bean>
+
+    <!-- SqlSession / SqlSessionFactory -->
+    <bean id="sqlSession" class="com.raycloud.cobarclient.mybatis.spring.MySqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <property name="router" ref="router"/>
+        <property name="shards" ref="shardSet"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource1"/>
+        <property name="configLocation" value="classpath:config/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath*:mybatis.mapper/*.xml"/>
+    </bean>
+
+    <!-- transaction -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean id="transactionManager"
+          class="com.alibaba.cobarclient.transaction.MyBestEffortMultiDataSourceTransactionManager">
+        <property name="shards" ref="shardSet"/>
+        <property name="transactionSynchronization" value="2"/>
+    </bean>
+</beans>

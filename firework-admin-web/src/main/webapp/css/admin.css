@@ -1,0 +1,99 @@
+.dataTables_wrapper {
+    margin-top: 20px;
+}
+
+.dataTables_length > label {
+    margin-left: 27px;
+}
+
+body {
+    overflow-y: auto;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #7D7777 !important
+}
+
+.table-bordered thead > tr > th {
+    background-color: #d5e4f3;
+    white-space: nowrap;
+}
+
+.table-bordered tbody > tr > td {
+    background-color: white;
+    white-space: nowrap;
+}
+
+.slider0-image {
+    width: 1903px;
+    left: 0px;
+    top: -372px;
+    height: 894.41px;
+}
+
+.slider1-image {
+    width: 1903px;
+    left: 0px;
+    top: -372px;
+    height: 894.41px;
+}
+
+.slider2-image {
+    height: 894.41px;
+    width: 1903px;
+    left: 0px;
+    top: -372px;
+}
+
+.vcode-id {
+    width: 200px;
+    right: 15px;
+    position: relative;
+}
+
+.vcode {
+    position: relative;
+    top: 6px;
+}
+
+.href-white {
+    color: #ffffff
+}
+
+#sidebar > ul > li > a {
+    color: #ffffff;
+}
+
+#sidebar > ul li ul li a {
+    color: #cccccc;
+}
+
+.border-none {
+    border: none;
+}
+
+.modal-label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.hide {
+    display: none;
+}
+
+.cg-busy {
+    z-index: 10000;
+}
+
+[ac-chart] {
+    background-color: white;
+    float: left;
+    margin: 0 1%;
+}
+
+.ac-tooltip {
+    color: black;
+    border: 2px solid rgba(200, 200, 0, 0.8);
+    background-color: rgba(200, 200, 0, 0.5);
+    z-index: 1600;
+}

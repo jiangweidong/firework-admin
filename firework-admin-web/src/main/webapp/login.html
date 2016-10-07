@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminApp">
+<!--Author: Daniel Kong-->
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+
+    <!-- css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="css/datatables.bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/angular-busy.min.css"/>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/supersized.css">
+    <link rel="stylesheet" href="css/style_login.css">
+    <link rel="stylesheet" href="css/admin.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+</head>
+
+<body onkeydown="keyProcess();">
+<div class="page-container">
+    <h1>Firework Admin</h1>
+
+    <form action="" id="form" ng-controller="loginController">
+        <input type="text" name="username" class="username" placeholder="Username Here" ng-model="user.username">
+        <input type="password" name="password" class="password" placeholder="Password Here" ng-model="user.password">
+        <button type="button" id="loginButton" class="submit_button" ng-click="login(user)">Login
+        </button>
+        <div class="error"><span>+</span></div>
+    </form>
+</div>
+
+<!-- JQuery -->
+<script src="js/lib/jquery.min.js"></script>
+<script src="js/lib/jquery.dataTables.min.js"></script>
+
+<!--Bootstrap-->
+<script src="js/lib/bootstrap.min.js"></script>
+
+<!--Customize-->
+<script src="js/lib/supersized.3.2.7.min.js"></script>
+<script src="js/lib/supersized-init.js"></script>
+<script src="js/lib/scripts.js"></script>
+
+<!-- D3 -->
+<script src="js/lib/d3.min.js"></script>
+
+<!-- AngularJS -->
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-resource.min.js"></script>
+<script src="js/lib/angular-route.min.js"></script>
+<script src="js/lib/angular-sanitize.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+
+<script src="js/lib/angular-datatables.min.js"></script>
+<script src="js/lib/angular-datatables.bootstrap.min.js"></script>
+<script src="js/lib/ui-bootstrap-tpls-0.12.0.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/angular-moment.min.js"></script>
+<script src="js/lib/angular-charts.min.js"></script>
+<script src="js/lib/angular-busy.min.js"></script>
+<script src="js/lib/angular-md5.min.js"></script>
+
+<!--SX Tabs-->
+<script src="js/lib/sx-tabs-tpls.js"></script>
+<script src="js/lib/sx-tabs.js"></script>
+
+<!-- Custom js -->
+<script src="js/app.js"></script>
+<script src="js/directives/ng-enter.js"></script>
+<script src="js/constant.js"></script>
+<script src="js/services/common/common-service.js"></script>
+<script src="js/services/common/rest-proxy-service.js"></script>
+<script src="js/services/common/auth-service.js"></script>
+<script src="js/services/common/user-service.js"></script>
+<script src="js/controllers/common/login-controller.js"></script>
+
+<!--背景-->
+<ul id="supersized" class="quality" style="visibility: visible;">
+    <li class="slide-0 activeslide" style="visibility: visible; opacity: 1;">
+        <a target="_blank">
+            <img src="images/bg.jpg" class="slider0-image">
+        </a>
+    </li>
+    <li class="slide-1" style="visibility: visible; opacity: 1;">
+        <a target="_blank">
+            <img src="images/bg.jpg" class="slider1-image">
+        </a>
+    </li>
+    <li class="slide-2 prevslide" style="visibility: visible; opacity: 1;">
+        <a target="_blank">
+            <img src="images/bg.jpg" class="slider2-image">
+        </a>
+    </li>
+</ul>
+
+<script type="text/javascript">
+    function keyProcess() {
+        if (event.keyCode == 13) {
+            event.cancelBubble = true;
+            event.returnValue = false;
+            document.getElementById('loginButton').click();
+        }
+    }
+
+    $(function () {
+        if ("ActiveXObject" in window)
+            alert('IE may have compatible problem, please use chrome/firefox instead');
+    });
+</script>
+</body>
+</html>

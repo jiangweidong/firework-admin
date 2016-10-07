@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminApp">
+<!--Author: Daniel Kong-->
+<head>
+    <title>Firework Admin</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+
+    <!-- css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="css/datatables.bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/angular-busy.min.css"/>
+    <link rel="stylesheet" href="css/angular-clock.css"/>
+    <link rel="stylesheet" href="css/customSelect.css"/>
+
+    <link rel="stylesheet" href="css/matrix-style.css"/>
+    <link rel="stylesheet" href="css/matrix-media.css"/>
+    <link rel="stylesheet" href="css/admin.css"/>
+
+    <!-- JQuery -->
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/jquery-ui.min.js"></script>
+    <script src="js/lib/jquery.nicescroll.min.js"></script>
+    <script src="js/lib/jquery.dataTables.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="js/lib/bootstrap.min.js"></script>
+
+    <!-- AngularJS -->
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-resource.min.js"></script>
+    <script src="js/lib/angular-route.min.js"></script>
+    <script src="js/lib/angular-sanitize.min.js"></script>
+    <script src="js/lib/angular-animate.min.js"></script>
+    <script src="js/lib/angular-datatables.min.js"></script>
+    <script src="js/lib/angular-datatables.bootstrap.min.js"></script>
+    <script src="js/lib/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="js/lib/moment.min.js"></script>
+    <script src="js/lib/angular-moment.min.js"></script>
+    <script src="js/lib/angular-busy.min.js"></script>
+    <script src="js/lib/angular-md5.min.js"></script>
+
+    <!-- D3 -->
+    <script src="js/lib/d3.min.js"></script>
+    <script src="js/lib/angular-charts.min.js"></script>
+
+    <!-- Matrix -->
+    <script src="js/lib/excanvas.min.js"></script>
+    <script src="js/lib/matrix.js"></script>
+
+    <!--SX Tabs-->
+    <script src="js/lib/sx-tabs-tpls.js"></script>
+    <script src="js/lib/sx-tabs.js"></script>
+
+    <!-- Firework Admin -->
+    <script src="js/app.js"></script>
+    <script src="js/directives/ng-enter.js"></script>
+    <script src="js/directives/ng-datepicker.js"></script>
+    <script src="js/directives/auto-focus.js"></script>
+    <script src="js/constant.js"></script>
+    <script src="js/services/common/common-service.js"></script>
+    <script src="js/services/common/rest-proxy-service.js"></script>
+    <script src="js/services/sys/menu-tree-service.js"></script>
+    <script src="js/services/common/auth-service.js"></script>
+    <script src="js/services/common/user-service.js"></script>
+
+    <script src="js/controllers/common/main-controller.js"></script>
+    <script src="js/services/common/dashboard-service.js"></script>
+    <script src="js/controllers/common/dashboard-controller.js"></script>
+
+    <script src="js/controllers/order/order-online-selfrun-controller.js"></script>
+    <script src="js/controllers/order/order-online-outsource-controller.js"></script>
+    <script src="js/controllers/statistics/user-statistics-new-controller.js"></script>
+    <script src="js/controllers/statistics/user-statistics-region-controller.js"></script>
+
+    <script type="text/javascript">
+        function init() {
+            $("body").height($(window).height() - 80);
+            $("#iframe-main").height($(window).height() - 90);
+            $("#sidebar").height($(window).height() - 50);
+        }
+        $(function () {
+            init();
+            $(window).resize(function () {
+                init();
+            });
+        });
+    </script>
+</head>
+<body id="bodyControl" ng-controller="mainController" cg-busy="loadingPromise">
+<div id="header">
+    <h1><a href="#">Firework Admin</a></h1>
+</div>
+
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        <li class="dropdown" id="profile-messages">
+            <a title="" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle href-white">
+                <i class="icon icon-user">Login User: </i>&nbsp;
+                <span class="text" ng-model="loginName" ng-init="loginName=getLoginUserName()">{{loginName}}</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a ng-click="logout()"><i class="icon-key"></i> LogOff</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div id="sidebar">
+    <ul>
+        <!--Dynamic menu tree constructs here-->
+    </ul>
+</div>
+
+<!--main-container-part-->
+<div id="content">
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb" ng-class="breadcrumbClass">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="container" style="width:100%;">
+                        <div sx-tabs="tabs"
+                             sx-tabs-context="context"
+                             sx-tabs-enabled="onTabEnabled(tab)"
+                             sx-tabs-disabled="onTabDisabled(tab)"
+                             sx-tab-switched="onTabSwitched(tab)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/services/sys/sys-menu-service.js"></script>
+</body>
+</html>

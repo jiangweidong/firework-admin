@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--Author: Daniel Kong-->
+<mapper namespace="mybatis.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="cn.fireworkstudio.admin.bean.Role">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, role_name, valid, create_time, create_user, update_time, update_user
+	</sql>
+
+    <!--Add new role-->
+    <insert id="addRole" parameterType="cn.fireworkstudio.admin.bean.Role" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO f_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            create_time,
+            create_user
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleName != null">
+                #{roleName},
+            </if>
+            <if test="valid != null">
+                #{valid},
+            </if>
+            now(),
+            #{createUser}
+        </trim>
+    </insert>
+
+    <!--Search role-->
+    <select id="searchRole" parameterType="cn.fireworkstudio.admin.bean.Role" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM f_role
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="roleName != null">
+                AND role_name = #{roleName}
+            </if>
+            <if test="valid != null">
+                AND valid = #{valid}
+            </if>
+        </trim>
+    </select>
+</mapper>

@@ -1,0 +1,6 @@
+<rules>
+    <rule>
+        <namespace>mybatis.mapper.LoginHistoryMapper</namespace>
+        <shards>partition2</shards>
+    </rule>
+</rules>

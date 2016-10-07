@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.fireworkstudio.admin</groupId>
+    <artifactId>firework-admin-pom</artifactId>
+    <packaging>pom</packaging>
+    <name>Firework Admin</name>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <modules>
+        <module>./firework-admin-common</module>
+        <module>./firework-admin-dao</module>
+        <module>./firework-admin-service</module>
+        <module>./firework-admin-api</module>
+        <module>./firework-admin-web</module>
+    </modules>
+
+    <build>
+        <finalName>firework-admin</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.compiler.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${plugin.surefire.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <!--开发环境-->
+            <id>develop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!--Environment-->
+                <env>develop</env>
+
+                <!--Log4j-->
+                <log.sql>TRACE</log.sql>
+                <log.type>INFO,CONSOLE</log.type>
+                <log.location>../logs</log.location>
+                <log.name>firework.log</log.name>
+
+                <!-- Partition1 -->
+                <db1.ip>localhost</db1.ip>
+                <db1.port>3306</db1.port>
+                <db1.database>firework1</db1.database>
+                <db1.username>guest</db1.username>
+                <db1.password>guest</db1.password>
+				
+				<!-- Partition2 -->
+                <db2.ip>localhost</db2.ip>
+                <db2.port>3306</db2.port>
+                <db2.database>firework2</db2.database>
+                <db2.username>guest</db2.username>
+                <db2.password>guest</db2.password>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--生产环境-->
+            <id>production</id>
+            <properties>
+                <!--Environment-->
+                <env>production</env>
+
+                <!--Log4j-->
+                <log.sql>TRACE</log.sql>
+                <log.type>INFO,CONSOLE</log.type>
+                <log.location>../logs</log.location>
+                <log.name>firework.log</log.name>
+
+                <!-- Partition1 -->
+                <db1.ip>localhost</db1.ip>
+                <db1.port>3306</db1.port>
+                <db1.database>firework1</db1.database>
+                <db1.username>guest</db1.username>
+                <db1.password>guest</db1.password>
+
+                <!-- Partition2 -->
+                <db2.ip>localhost</db2.ip>
+                <db2.port>3306</db2.port>
+                <db2.database>firework2</db2.database>
+                <db2.username>guest</db2.username>
+                <db2.password>guest</db2.password>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <admin.version>0.0.1-SNAPSHOT</admin.version>
+        <spring.version>4.2.4.RELEASE</spring.version>
+        <spring.security.version>4.0.4.RELEASE</spring.security.version>
+        <mybatis.version>3.3.1</mybatis.version>
+        <mybatis-spring.version>1.2.4</mybatis-spring.version>
+        <mysql-connector.version>5.1.36</mysql-connector.version>
+        <fastjson.version>1.2.7</fastjson.version>
+        <httpclient.version>4.5</httpclient.version>
+        <log4j.version>1.2.17</log4j.version>
+        <slf4j.version>1.6.6</slf4j.version>
+        <junit.version>4.11</junit.version>
+        <h2.version>1.4.191</h2.version>
+        <jdk.version>1.8</jdk.version>
+        <plugin.compiler.version>3.1</plugin.compiler.version>
+        <plugin.surefire.version>2.19</plugin.surefire.version>
+
+        <!--DB 通用配置-->
+        <db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
+        <db.maxActive>50</db.maxActive>
+        <db.maxWait>1800</db.maxWait>
+        <db.threadPoolSize>10</db.threadPoolSize>
+        <db.initialSize>2</db.initialSize>
+        <db.minIdle>2</db.minIdle>
+        <db.logAbandoned>true</db.logAbandoned>
+        <db.testWhileIdle>true</db.testWhileIdle>
+        <db.testOnReturn>false</db.testOnReturn>
+        <db.testOnBorrow>true</db.testOnBorrow>
+        <db.validationQuery><![CDATA[select now()]]></db.validationQuery>
+        <db.numTestsPerEvictionRun>16</db.numTestsPerEvictionRun>
+        <db.timeBetweenEvictionRunsMillis>60000</db.timeBetweenEvictionRunsMillis>
+        <db.minEvictableIdleTimeMillis>180000</db.minEvictableIdleTimeMillis>
+        <db.removeAbandoned>true</db.removeAbandoned>
+        <db.removeAbandonedTimeout>180</db.removeAbandonedTimeout>
+    </properties>
+</project>
+
+

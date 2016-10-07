@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--Author: Daniel Kong-->
+<mapper namespace="mybatis.mapper.ModuleMapper">
+    <resultMap id="BaseResultMap" type="cn.fireworkstudio.admin.bean.Module">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent" property="parent" jdbcType="BIGINT"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="controller" property="controller" jdbcType="VARCHAR"/>
+        <result column="template" property="template" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="valid" property="valid" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, code, name, parent, url, controller, template, order_id, valid, create_time,
+		create_user, update_time, update_user
+	</sql>
+
+    <!--Add new module-->
+    <insert id="addModule" parameterType="cn.fireworkstudio.admin.bean.Module" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO f_module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="parent != null">
+                parent,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="controller != null">
+                controller,
+            </if>
+            <if test="template != null">
+                template,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            create_time,
+            create_user
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="parent != null">
+                #{parent},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+            <if test="controller != null">
+                #{controller},
+            </if>
+            <if test="template != null">
+                #{template},
+            </if>
+            <if test="orderId != null">
+                #{orderId},
+            </if>
+            <if test="valid != null">
+                #{valid},
+            </if>
+            now(),
+            #{createUser}
+        </trim>
+    </insert>
+
+    <!--Get module list-->
+    <select id="searchModule" parameterType="cn.fireworkstudio.admin.bean.Module" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM f_module
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="code != null and code != ''">
+                AND code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                AND name = #{name}
+            </if>
+            <if test="parent != null">
+                AND parent = #{parent}
+            </if>
+            <if test="url != null and url != ''">
+                AND url = #{url}
+            </if>
+            <if test="controller != null and controller != ''">
+                AND controller = #{controller}
+            </if>
+            <if test="template != null and template != ''">
+                AND template = #{template}
+            </if>
+            <if test="orderId != null">
+                AND order_id = #{orderId}
+            </if>
+            <if test="valid != null">
+                AND valid = #{valid}
+            </if>
+        </trim>
+    </select>
+
+    <!--Get module of certain user-->
+    <select id="getModulesByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <![CDATA[
+          SELECT
+                m.*
+            FROM
+                f_user_role r
+            INNER JOIN f_role_module rm ON r.role_name = rm.role_name
+            AND r.valid = 1
+            AND r.user_id = #{userId}
+            AND rm.valid = 1
+            INNER JOIN f_module m ON rm.module_code = m. CODE
+            AND m.valid = 1
+            order by m.parent, m.order_id, m.id
+        ]]>
+    </select>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--Author: Daniel Kong-->
+<mapper namespace="mybatis.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.fireworkstudio.admin.bean.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="id_number" property="idNumber" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="zip" property="zip" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, user_id, user_pwd, user_name, gender, id_number, mobile, email, zip, address, valid, create_time,
+		create_user, update_time, update_user
+	</sql>
+
+    <!--Add new user-->
+    <insert id="addUser" parameterType="cn.fireworkstudio.admin.bean.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO f_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userPwd != null">
+                user_pwd,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="idNumber != null">
+                id_number,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="zip != null">
+                zip,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            create_time,
+            create_user
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="userPwd != null">
+                #{userPwd},
+            </if>
+            <if test="userName != null">
+                #{userName},
+            </if>
+            <if test="gender != null">
+                #{gender},
+            </if>
+            <if test="idNumber != null">
+                #{idNumber},
+            </if>
+            <if test="mobile != null">
+                #{mobile},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="zip != null">
+                #{zip},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="valid != null">
+                #{valid},
+            </if>
+            now(),
+            #{createUser}
+        </trim>
+    </insert>
+
+    <!--Seach user-->
+    <select id="searchUser" parameterType="cn.fireworkstudio.admin.bean.User" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM f_user
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="userId != null and userId != ''">
+                AND user_id = #{userId}
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                AND user_pwd = #{userPwd}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="gender != null">
+                AND gender = #{gender}
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                AND id_number = #{idNumber}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+            <if test="email != null and email != ''">
+                AND email = #{email}
+            </if>
+            <if test="zip != null and zip != ''">
+                AND zip = #{zip}
+            </if>
+            <if test="address != null and address != ''">
+                AND address LIKE CONCAT(CONCAT('%', #{address}),'%')
+            </if>
+            <if test="valid != null">
+                AND valid = #{valid}
+            </if>
+        </trim>
+    </select>
+</mapper>
