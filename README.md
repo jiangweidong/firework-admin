@@ -17,7 +17,7 @@ Currently only dashboard tab works, other demo tabs is to be completed before Oc
 
 ## Install:
   
->1. Add following section in maven's settings.xml:
+* Add following section in maven's settings.xml:
 
 ```xml
  <profiles>
@@ -37,11 +37,11 @@ Currently only dashboard tab works, other demo tabs is to be completed before Oc
     <activeProfile>myProfile</activeProfile>
   </activeProfiles>
 ```
->2. Using `firework1.sql` and `firework2.sql` (in schema folder) to initialize two databases
->3. Database username/password could be changed in root `pom.xml`
->4. Run `mvn clean install -P develop`
->5. Deploy api.war `(/api)` and admin.war `(/admin)` in tomcat. (If you don't want `8080` port, you may modify `constant.js`)
->6. Access [http://localhost:8080/admin](http://localhost:8080/admin) via Chrome/Firefox, login name: `demo`, password: `demo`
+* Using `firework1.sql` and `firework2.sql` (in schema folder) to initialize two databases
+* Database username/password could be changed in root `pom.xml`
+* Run `mvn clean install -P develop`
+* Deploy api.war `(/api)` and admin.war `(/admin)` in tomcat. (If you don't want `8080` port, you may modify `constant.js`)
+* Access [http://localhost:8080/admin](http://localhost:8080/admin) via Chrome/Firefox, login name: `demo`, password: `demo`
  
 ### Build Environment (Recommend):
 * Maven 3
