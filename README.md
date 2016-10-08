@@ -1,5 +1,11 @@
 # firework-admin
->An admin portal based on angularjs (currently v1 supported), bootstrap, d3.js, spring mvc, mybatis, maven
+>An admin portal based on
+>* Spring MVC
+>* Spring Security
+>* MyBatis
+>* Angularjs
+>* Bootstrap
+>* D3.js
 
 ## Features:
 
