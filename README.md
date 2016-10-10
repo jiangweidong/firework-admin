@@ -62,7 +62,7 @@ N/A
 
 ![image](http://7xknr8.com1.z0.glb.clouddn.com/asset/resource/20161008002231.jpg?imageView2/2/w/800)
 
-## Lisence:
+## License:
 
 Lisenced under [Apache 2.0 lisence](http://opensource.org/licenses/Apache-2.0)
 
