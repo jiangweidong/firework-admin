@@ -57,7 +57,7 @@ Currently only dashboard tab works, other demo tabs is to be completed before Oc
 
 N/A
 
-### Screenshorts:
+### Screenshots:
 ![image](http://7xknr8.com1.z0.glb.clouddn.com/asset/resource/20161007232234.jpg?imageView2/2/w/800)
 
 ![image](http://7xknr8.com1.z0.glb.clouddn.com/asset/resource/20161008002231.jpg?imageView2/2/w/800)
