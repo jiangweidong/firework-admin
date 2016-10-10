@@ -64,7 +64,7 @@ N/A
 
 ## License:
 
-Lisenced under [Apache 2.0 lisence](http://opensource.org/licenses/Apache-2.0)
+License under [Apache 2.0 license](http://opensource.org/licenses/Apache-2.0)
 
 ## References:
 
